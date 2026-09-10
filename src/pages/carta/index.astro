@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MenuList from "../../components/MenuList.astro";
+import { site } from "../../data/site";
+---
+
+<BaseLayout
+  title="Carta · Casa Amate"
+  description="Consulta la propuesta de cocina mediterránea de Casa Amate en Jaén. Carta orientativa pendiente de validación."
+  active="menu"
+>
+  <header class="menu-hero shell">
+    <div>
+      <p class="eyebrow">Casa Amate · Jaén</p>
+      <h1>Nuestra carta</h1>
+      <p class="menu-hero__intro">Cocina mediterránea con acento propio, pensada para compartir.</p>
+    </div>
+    <a class="language-switch" href="/carta/en/" lang="en" hreflang="en">EN <span>English</span></a>
+  </header>
+  <div class="draft-banner" role="note">
+    <div class="shell">
+      <span aria-hidden="true">✦</span>
+      Carta orientativa. Platos y precios pendientes de confirmación por el restaurante.
+    </div>
+  </div>
+  <MenuList locale="es" />
+  <aside class="menu-cta shell" aria-label="Reservas">
+    <p>¿Ya sabes con quién vas a compartir mesa?</p>
+    <a class="button button--primary" href={site.phoneHref}>Reservar · {site.phoneDisplay}</a>
+  </aside>
+</BaseLayout>

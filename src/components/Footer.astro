@@ -1,0 +1,18 @@
+---
+import Brand from "./Brand.astro";
+import { site } from "../data/site";
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <Brand />
+      <p class="footer-note">{site.draftNotice}</p>
+    </div>
+    <div class="footer-links" aria-label="Enlaces sociales">
+      <a href={site.instagram} target="_blank" rel="noreferrer">Instagram</a>
+      <a href={site.facebook} target="_blank" rel="noreferrer">Facebook</a>
+      <a href={`mailto:${site.email}`}>Email</a>
+    </div>
+  </div>
+</footer>

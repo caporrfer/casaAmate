@@ -1,0 +1,26 @@
+---
+import Brand from "./Brand.astro";
+import { site } from "../data/site";
+
+interface Props {
+  active?: "home" | "menu";
+}
+
+const { active = "home" } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="site-header__inner shell">
+    <a class="brand-link" href="/">
+      <Brand compact />
+    </a>
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      <a aria-current={active === "home" ? "page" : undefined} href="/">Inicio</a>
+      <a aria-current={active === "menu" ? "page" : undefined} href="/carta/">Carta</a>
+      <a href={active === "home" ? "#visitanos" : "/#visitanos"}>Visítanos</a>
+    </nav>
+    <a class="button button--small button--outline header-book" href={site.phoneHref}>
+      Reservar
+    </a>
+  </div>
+</header>

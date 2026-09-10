@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MenuList from "../../components/MenuList.astro";
+import { site } from "../../data/site";
+---
+
+<BaseLayout
+  title="Menu · Casa Amate"
+  description="Explore Casa Amate's Mediterranean-inspired menu in Jaén. Draft menu pending confirmation by the restaurant."
+  lang="en"
+  active="menu"
+>
+  <header class="menu-hero shell">
+    <div>
+      <p class="eyebrow">Casa Amate · Jaén</p>
+      <h1>Our menu</h1>
+      <p class="menu-hero__intro">Mediterranean cooking with a distinctive voice, made for sharing.</p>
+    </div>
+    <a class="language-switch" href="/carta/" lang="es" hreflang="es">ES <span>Español</span></a>
+  </header>
+  <div class="draft-banner" role="note">
+    <div class="shell">
+      <span aria-hidden="true">✦</span>
+      Sample menu. Dishes and prices are pending confirmation by the restaurant.
+    </div>
+  </div>
+  <MenuList locale="en" />
+  <aside class="menu-cta shell" aria-label="Reservations">
+    <p>Already know who you are sharing your table with?</p>
+    <a class="button button--primary" href={site.phoneHref}>Book · {site.phoneDisplay}</a>
+  </aside>
+</BaseLayout>

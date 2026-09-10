@@ -1,0 +1,18 @@
+---
+import { Image } from "astro:assets";
+import { galleryImages } from "../data/gallery";
+---
+
+<div class="gallery" aria-label="Galería de Casa Amate">
+  {galleryImages.map((image, index) => (
+    <figure class:list={["gallery__item", `gallery__item--${index + 1}`]}>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        widths={[360, 540, 720]}
+        sizes="(max-width: 719px) 72vw, (max-width: 1099px) 44vw, 31vw"
+        loading="lazy"
+      />
+    </figure>
+  ))}
+</div>
