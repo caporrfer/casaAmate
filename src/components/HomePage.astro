@@ -3,6 +3,11 @@ import { Image } from 'astro:assets';
 import heroImage from '../assets/images/flamenquin.webp';
 import saladImage from '../assets/images/ensalada.webp';
 import biteImage from '../assets/images/bocado.webp';
+import chefImage from '../assets/images/chef.jpg';
+import baoImage from '../assets/images/bao.jpg';
+import potatoesImage from '../assets/images/patatas.jpg';
+import plumaImage from '../assets/images/pluma.jpg';
+import toastImage from '../assets/images/tosta.jpg';
 import { COPY, HOURS, RESTAURANT } from '../data/site';
 import type { Locale } from '../types';
 
@@ -10,6 +15,7 @@ interface Props { lang: Locale; }
 const { lang } = Astro.props;
 const copy = COPY[lang];
 const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
+const galleryImages = [baoImage, potatoesImage, plumaImage, toastImage];
 ---
 
 <section class="hero">
@@ -60,6 +66,55 @@ const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
     <h2>{copy.storyTitle}</h2>
     <p>{copy.storyBody}</p>
     <span class="olive-stem" aria-hidden="true">✦</span>
+  </div>
+</section>
+
+<section class="chef-section section" aria-labelledby="chef-title">
+  <div class="chef-inner page-shell">
+    <figure class="chef-portrait reveal">
+      <Image
+        src={chefImage}
+        alt={copy.chefAlt as string}
+        widths={[420, 640, 840]}
+        sizes="(min-width: 768px) 42vw, 92vw"
+        format="webp"
+        quality={84}
+        loading="lazy"
+      />
+    </figure>
+    <div class="chef-copy">
+      <p class="eyebrow">{copy.chefEyebrow}</p>
+      <h2 id="chef-title">{copy.chefTitle}</h2>
+      <p class="chef-lead">{copy.chefLead}</p>
+      <p>{copy.chefBody}</p>
+      <p class="chef-signature">
+        <span>David Amate</span>
+        {copy.chefRole}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section section page-shell" aria-labelledby="gallery-title">
+  <div class="section-heading gallery-heading">
+    <p class="eyebrow">{copy.galleryEyebrow}</p>
+    <h2 id="gallery-title">{copy.galleryTitle}</h2>
+  </div>
+  <div class="culinary-grid">
+    {galleryImages.map((image, index) => (
+      <figure class:list={["culinary-card", `culinary-card-${index + 1}`]}>
+        <Image
+          src={image}
+          alt={(copy.galleryAlts as string[])[index]}
+          widths={[360, 540, 720]}
+          sizes="(min-width: 768px) 46vw, 92vw"
+          format="webp"
+          quality={82}
+          loading="lazy"
+        />
+        <figcaption>{(copy.galleryLabels as string[])[index]}</figcaption>
+      </figure>
+    ))}
   </div>
 </section>
 

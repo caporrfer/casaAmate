@@ -24,6 +24,28 @@ test('language links preserve the equivalent page', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Ver en español' })).toHaveAttribute('href', '/');
 });
 
+for (const chef of [
+  { path: '/', heading: 'Tradición inquieta', alt: /David Amate, chef de Casa Amate/ },
+  { path: '/en/', heading: 'Restless tradition', alt: /David Amate, chef at Casa Amate/ },
+]) {
+  test(`${chef.path} presents the chef and complete imagery`, async ({ page }) => {
+    await page.goto(chef.path);
+    await expect(page.getByRole('heading', { name: chef.heading })).toBeVisible();
+    await expect(page.getByRole('img', { name: chef.alt })).toBeVisible();
+    const images = page.locator('img');
+    const imageCount = await images.count();
+    expect(imageCount).toBeGreaterThanOrEqual(8);
+    for (let index = 0; index < imageCount; index += 1) {
+      const image = images.nth(index);
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate((element) => {
+        const img = element as HTMLImageElement;
+        return img.complete && img.naturalWidth > 0;
+      })).toBeTruthy();
+    }
+  });
+}
+
 test('menu remains available without client-side JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
