@@ -337,33 +337,6 @@ h2 {
   line-height: 1.1;
 }
 
-.story {
-  border-block: 1px solid var(--line);
-  background: #161612;
-}
-
-.story-inner {
-  position: relative;
-}
-
-.story h2 {
-  max-width: 10ch;
-}
-
-.story p:not(.eyebrow) {
-  max-width: 38rem;
-  margin: 1.8rem 0 0;
-  color: var(--paper-muted);
-  font-size: 1.08rem;
-}
-
-.olive-stem {
-  display: block;
-  margin-top: 3rem;
-  color: var(--gold);
-  font-size: 1.4rem;
-}
-
 .chef-section {
   overflow: hidden;
   border-bottom: 1px solid var(--line);
@@ -883,10 +856,6 @@ h2 {
 
   .food-card:not(.food-card-tall) {
     grid-row: 2 / 4;
-  }
-
-  .story-inner {
-    padding-left: min(12vw, 8rem);
   }
 
   .chef-inner {
