@@ -1,43 +1,39 @@
 # Casa Amate
 
-Borrador de la web de Restaurante Casa Amate, pensado primero para móvil y preparado como sitio estático con Astro.
-
-> Esta versión es una propuesta para presentar al restaurante. La carta, precios, horarios, teléfono, fotografías y textos deben validarse con los propietarios antes de publicar la web oficial.
+Propuesta web bilingüe para Restaurante Casa Amate, construida con Astro y salida estática. La web está preparada para una presentación en Vercel y lleva `noindex` hasta que el restaurante confirme el contenido comercial.
 
 ## Desarrollo
 
-Necesitas Node.js 24 o una versión LTS compatible.
+Requiere Node.js 20 o superior.
 
 ```bash
 npm install
 npm run dev
 ```
 
-La terminal mostrará la dirección local. Para comprobar y generar la versión publicable:
+Comprobaciones antes de publicar:
 
 ```bash
-npm run validate
+npm run check
+npm run build
+npx playwright install chromium webkit
+npm run test:e2e
 ```
 
-El resultado estático queda en `dist/` y puede alojarse en cualquier proveedor de páginas estáticas.
+## Contenido
 
-## Actualizar contenidos
+- Los datos de contacto, horarios y textos están en `src/data/site.ts`.
+- Los platos, traducciones y precios están en `src/data/menu.ts`.
+- Las imágenes oficiales están en `src/assets/images`.
 
-- Datos de contacto y horarios: `src/data/site.ts`.
-- Carta bilingüe y precios: `src/data/menu.ts`.
-- Selección de la galería: `src/data/gallery.ts`.
-- Fotografías: `src/assets/images/`.
+Cada precio se guarda una sola vez y se comparte entre español e inglés. Antes de presentar la propuesta como web oficial deben confirmarse con el restaurante la carta, los alérgenos, los horarios, el teléfono, los permisos de uso de imágenes y los datos legales.
 
-Cada plato usa una única lista de precios compartida por español e inglés. Los campos `source` y `provisional` documentan internamente el origen y el estado del contenido. No se publican alérgenos porque no existe una fuente validada.
+## Vercel
 
-## Fuentes del borrador
+Importa el repositorio en Vercel y selecciona esta rama. Vercel detecta Astro automáticamente; el comando de compilación es `npm run build` y la carpeta de salida es `dist`. No hacen falta variables de entorno ni adaptador de servidor.
 
-Las fotografías proceden de los perfiles públicos de [Instagram](https://www.instagram.com/restaurantecasamate/) y [Facebook](https://www.facebook.com/restaurantecasamate). Algunos platos se identificaron también mediante las fichas públicas del restaurante y reseñas. Los nombres descriptivos y precios que no aparecen en una fuente verificable son ejemplos autorizados para este borrador.
+Cuando el contenido esté aprobado para producción, elimina `public/robots.txt` y cambia la etiqueta `robots` de `src/layouts/BaseLayout.astro` a `index, follow`.
 
-## Antes de producción
+## Fuentes
 
-1. Confirmar por escrito el derecho a reutilizar las fotografías descargadas de las redes del restaurante.
-2. Validar todos los platos, descripciones, precios, horarios y el teléfono de reservas.
-3. Añadir información legal y de alérgenos facilitada por el restaurante.
-4. Retirar los avisos de borrador, cambiar `noindex` y actualizar `public/robots.txt`.
-5. Configurar el dominio definitivo y revisar la analítica o el aviso de cookies solo si se incorporan esos servicios.
+Consulta [docs/content-sources.md](docs/content-sources.md) para ver las fuentes públicas, las fechas y los puntos que requieren confirmación.

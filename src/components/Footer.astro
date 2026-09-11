@@ -1,18 +1,21 @@
 ---
-import Brand from "./Brand.astro";
-import { site } from "../data/site";
+import { COPY, RESTAURANT } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = COPY[lang];
 ---
 
 <footer class="site-footer">
-  <div class="shell footer-grid">
+  <div class="footer-inner">
     <div>
-      <Brand />
-      <p class="footer-note">{site.draftNotice}</p>
+      <p class="footer-name">Casa Amate</p>
+      <p>{copy.footerNote}</p>
     </div>
-    <div class="footer-links" aria-label="Enlaces sociales">
-      <a href={site.instagram} target="_blank" rel="noreferrer">Instagram</a>
-      <a href={site.facebook} target="_blank" rel="noreferrer">Facebook</a>
-      <a href={`mailto:${site.email}`}>Email</a>
+    <div class="footer-links" aria-label={copy.social}>
+      <a href={RESTAURANT.instagramUrl} target="_blank" rel="noreferrer">Instagram</a>
+      <a href={RESTAURANT.facebookUrl} target="_blank" rel="noreferrer">Facebook</a>
     </div>
   </div>
 </footer>

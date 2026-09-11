@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/flamenquin.webp';
+import saladImage from '../assets/images/ensalada.webp';
+import biteImage from '../assets/images/bocado.webp';
+import chefImage from '../assets/images/chef.jpg';
+import baoImage from '../assets/images/bao.jpg';
+import potatoesImage from '../assets/images/patatas.jpg';
+import plumaImage from '../assets/images/pluma.jpg';
+import toastImage from '../assets/images/tosta.jpg';
+import { COPY, HOURS, RESTAURANT } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = COPY[lang];
+const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
+const galleryImages = [baoImage, potatoesImage, plumaImage, toastImage];
+---
+
+<section class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[512, 768, 1024]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="hero-shade"></div>
+  <div class="hero-content page-shell">
+    <p class="eyebrow">{copy.heroEyebrow}</p>
+    <h1>{copy.heroTitle}</h1>
+    <p class="hero-copy">{copy.heroBody}</p>
+    <div class="button-row">
+      <a class="button button-primary" href={menuPath}>{copy.viewMenu}</a>
+      <a class="button button-ghost" href={RESTAURANT.phoneHref} aria-label={copy.reserveAria}>{copy.reserve}</a>
+    </div>
+  </div>
+  <p class="hero-caption">{copy.dishLabels[0]}</p>
+</section>
+
+<section class="section selection page-shell" aria-labelledby="selection-title">
+  <div class="section-heading">
+    <p class="eyebrow">{copy.selectionEyebrow}</p>
+    <h2 id="selection-title">{copy.selectionTitle}</h2>
+    <p>{copy.selectionBody}</p>
+  </div>
+  <div class="food-grid">
+    <figure class="food-card food-card-tall reveal">
+      <Image src={saladImage} alt={copy.dishLabels[1]} widths={[384, 512]} sizes="(min-width: 800px) 42vw, 92vw" loading="lazy" />
+      <figcaption>{copy.dishLabels[1]}</figcaption>
+    </figure>
+    <figure class="food-card reveal reveal-delay">
+      <Image src={biteImage} alt={copy.dishLabels[2]} widths={[384, 512]} sizes="(min-width: 800px) 42vw, 92vw" loading="lazy" />
+      <figcaption>{copy.dishLabels[2]}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="story section">
+  <div class="story-inner page-shell">
+    <p class="eyebrow">{copy.storyEyebrow}</p>
+    <h2>{copy.storyTitle}</h2>
+    <p>{copy.storyBody}</p>
+    <span class="olive-stem" aria-hidden="true">✦</span>
+  </div>
+</section>
+
+<section class="chef-section section" aria-labelledby="chef-title">
+  <div class="chef-inner page-shell">
+    <figure class="chef-portrait reveal">
+      <Image
+        src={chefImage}
+        alt={copy.chefAlt as string}
+        widths={[420, 640, 840]}
+        sizes="(min-width: 768px) 42vw, 92vw"
+        format="webp"
+        quality={84}
+        loading="lazy"
+      />
+    </figure>
+    <div class="chef-copy">
+      <p class="eyebrow">{copy.chefEyebrow}</p>
+      <h2 id="chef-title">{copy.chefTitle}</h2>
+      <p class="chef-lead">{copy.chefLead}</p>
+      <p>{copy.chefBody}</p>
+      <p class="chef-signature">
+        <span>David Amate</span>
+        {copy.chefRole}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section section page-shell" aria-labelledby="gallery-title">
+  <div class="section-heading gallery-heading">
+    <p class="eyebrow">{copy.galleryEyebrow}</p>
+    <h2 id="gallery-title">{copy.galleryTitle}</h2>
+  </div>
+  <div class="culinary-grid">
+    {galleryImages.map((image, index) => (
+      <figure class:list={["culinary-card", `culinary-card-${index + 1}`]}>
+        <Image
+          src={image}
+          alt={(copy.galleryAlts as string[])[index]}
+          widths={[360, 540, 720]}
+          sizes="(min-width: 768px) 46vw, 92vw"
+          format="webp"
+          quality={82}
+          loading="lazy"
+        />
+        <figcaption>{(copy.galleryLabels as string[])[index]}</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<section class="section visit page-shell" id="visitanos" aria-labelledby="visit-title">
+  <div class="section-heading">
+    <p class="eyebrow">{copy.visitEyebrow}</p>
+    <h2 id="visit-title">{copy.visitTitle}</h2>
+  </div>
+  <div class="visit-grid">
+    <div class="visit-card">
+      <p class="detail-label">{copy.addressLabel}</p>
+      <p class="detail-value">{RESTAURANT.address}</p>
+      <a class="text-link" href={RESTAURANT.mapsUrl} target="_blank" rel="noreferrer">{copy.maps}<span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="visit-card hours-card">
+      <p class="detail-label">{copy.hoursLabel}</p>
+      <dl class="hours-list">
+        {HOURS.map(({ day, hours }) => (
+          <div>
+            <dt>{day[lang]}</dt>
+            <dd>{hours.length ? hours.map((hour) => <span>{hour}</span>) : copy.closed}</dd>
+          </div>
+        ))}
+      </dl>
+      <a class="text-link muted-link" href={RESTAURANT.mapsUrl} target="_blank" rel="noreferrer">{copy.hoursSource}<span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="visit-card reserve-card">
+      <p class="detail-label">{copy.phoneLabel}</p>
+      <a class="phone-number" href={RESTAURANT.phoneHref}>{RESTAURANT.phoneDisplay}</a>
+      <a class="button button-primary" href={RESTAURANT.phoneHref} aria-label={copy.reserveAria}>{copy.reserve}</a>
+    </div>
+  </div>
+</section>

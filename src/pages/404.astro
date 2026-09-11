@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COPY } from '../data/site';
+---
+
+<BaseLayout lang="es" title="Página no encontrada | Casa Amate" description="Página no encontrada." page="404">
+  <section class="not-found page-shell">
+    <p class="eyebrow">404</p>
+    <h1>{COPY.es.notFoundTitle}</h1>
+    <p>{COPY.es.notFoundBody}</p>
+    <a class="button button-primary" href="/">{COPY.es.backHome}</a>
+  </section>
+</BaseLayout>
