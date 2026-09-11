@@ -1,0 +1,20 @@
+---
+import { COPY, RESTAURANT } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = COPY[lang];
+const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
+---
+
+<nav class="mobile-bar" aria-label={lang === 'es' ? 'Acciones rápidas' : 'Quick actions'}>
+  <a class="mobile-action mobile-action-secondary" href={menuPath}>
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" /></svg>
+    {copy.viewMenu}
+  </a>
+  <a class="mobile-action mobile-action-primary" href={RESTAURANT.phoneHref} aria-label={copy.reserveAria}>
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7.3 3.5 4.8 5.4c.3 6.7 7.1 13.5 13.8 13.8l1.9-2.5-4.2-3-1.7 1.6c-2.5-1-4.9-3.4-5.9-5.9l1.6-1.7-3-4.2Z" /></svg>
+    {copy.reserve}
+  </a>
+</nav>

@@ -1,0 +1,9 @@
+---
+import HomePage from '../../components/HomePage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { META } from '../../data/site';
+---
+
+<BaseLayout lang="en" title={META.en.homeTitle} description={META.en.homeDescription} page="home">
+  <HomePage lang="en" />
+</BaseLayout>

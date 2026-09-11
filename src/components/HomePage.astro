@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/flamenquin.webp';
+import saladImage from '../assets/images/ensalada.webp';
+import biteImage from '../assets/images/bocado.webp';
+import { COPY, HOURS, RESTAURANT } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = COPY[lang];
+const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
+---
+
+<section class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[512, 768, 1024]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="hero-shade"></div>
+  <div class="hero-content page-shell">
+    <p class="eyebrow">{copy.heroEyebrow}</p>
+    <h1>{copy.heroTitle}</h1>
+    <p class="hero-copy">{copy.heroBody}</p>
+    <div class="button-row">
+      <a class="button button-primary" href={menuPath}>{copy.viewMenu}</a>
+      <a class="button button-ghost" href={RESTAURANT.phoneHref} aria-label={copy.reserveAria}>{copy.reserve}</a>
+    </div>
+  </div>
+  <p class="hero-caption">{copy.dishLabels[0]}</p>
+</section>
+
+<section class="section selection page-shell" aria-labelledby="selection-title">
+  <div class="section-heading">
+    <p class="eyebrow">{copy.selectionEyebrow}</p>
+    <h2 id="selection-title">{copy.selectionTitle}</h2>
+    <p>{copy.selectionBody}</p>
+  </div>
+  <div class="food-grid">
+    <figure class="food-card food-card-tall reveal">
+      <Image src={saladImage} alt={copy.dishLabels[1]} widths={[384, 512]} sizes="(min-width: 800px) 42vw, 92vw" loading="lazy" />
+      <figcaption>{copy.dishLabels[1]}</figcaption>
+    </figure>
+    <figure class="food-card reveal reveal-delay">
+      <Image src={biteImage} alt={copy.dishLabels[2]} widths={[384, 512]} sizes="(min-width: 800px) 42vw, 92vw" loading="lazy" />
+      <figcaption>{copy.dishLabels[2]}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="story section">
+  <div class="story-inner page-shell">
+    <p class="eyebrow">{copy.storyEyebrow}</p>
+    <h2>{copy.storyTitle}</h2>
+    <p>{copy.storyBody}</p>
+    <span class="olive-stem" aria-hidden="true">✦</span>
+  </div>
+</section>
+
+<section class="section visit page-shell" id="visitanos" aria-labelledby="visit-title">
+  <div class="section-heading">
+    <p class="eyebrow">{copy.visitEyebrow}</p>
+    <h2 id="visit-title">{copy.visitTitle}</h2>
+  </div>
+  <div class="visit-grid">
+    <div class="visit-card">
+      <p class="detail-label">{copy.addressLabel}</p>
+      <p class="detail-value">{RESTAURANT.address}</p>
+      <a class="text-link" href={RESTAURANT.mapsUrl} target="_blank" rel="noreferrer">{copy.maps}<span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="visit-card hours-card">
+      <p class="detail-label">{copy.hoursLabel}</p>
+      <dl class="hours-list">
+        {HOURS.map(({ day, hours }) => (
+          <div>
+            <dt>{day[lang]}</dt>
+            <dd>{hours.length ? hours.map((hour) => <span>{hour}</span>) : copy.closed}</dd>
+          </div>
+        ))}
+      </dl>
+      <a class="text-link muted-link" href={RESTAURANT.mapsUrl} target="_blank" rel="noreferrer">{copy.hoursSource}<span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="visit-card reserve-card">
+      <p class="detail-label">{copy.phoneLabel}</p>
+      <a class="phone-number" href={RESTAURANT.phoneHref}>{RESTAURANT.phoneDisplay}</a>
+      <a class="button button-primary" href={RESTAURANT.phoneHref} aria-label={copy.reserveAria}>{copy.reserve}</a>
+    </div>
+  </div>
+</section>

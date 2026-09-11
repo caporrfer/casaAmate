@@ -1,0 +1,42 @@
+---
+import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/dm-sans';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import type { Locale } from '../types';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  page: 'home' | 'menu' | '404';
+}
+
+const { lang, title, description, page } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#11110f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang="es" href={page === 'menu' ? '/carta/' : '/'} />
+    <link rel="alternate" hreflang="en" href={page === 'menu' ? '/en/menu/' : '/en/'} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">{lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
+    <Header lang={lang} page={page} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    {page !== '404' && <MobileBar lang={lang} />}
+  </body>
+</html>

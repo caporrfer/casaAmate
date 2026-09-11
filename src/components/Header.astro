@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo-casa-amate.webp';
+import { COPY } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props {
+  lang: Locale;
+  page: 'home' | 'menu' | '404';
+}
+
+const { lang, page } = Astro.props;
+const copy = COPY[lang];
+const homePath = lang === 'es' ? '/' : '/en/';
+const menuPath = lang === 'es' ? '/carta/' : '/en/menu/';
+const visitPath = `${homePath}#visitanos`;
+const alternatePath = page === 'menu'
+  ? (lang === 'es' ? '/en/menu/' : '/carta/')
+  : (lang === 'es' ? '/en/' : '/');
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href={homePath} aria-label={lang === 'es' ? 'Casa Amate, inicio' : 'Casa Amate, home'}>
+      <Image src={logo} width={52} height={52} alt="" />
+      <span>Casa Amate</span>
+    </a>
+    <nav class="desktop-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
+      <a href={menuPath} aria-current={page === 'menu' ? 'page' : undefined}>{copy.navMenu}</a>
+      <a href={visitPath}>{copy.navVisit}</a>
+      <a class="language-link" href={alternatePath} lang={lang === 'es' ? 'en' : 'es'} aria-label={copy.languageLabel}>{copy.languageShort}</a>
+    </nav>
+    <a class="mobile-language" href={alternatePath} lang={lang === 'es' ? 'en' : 'es'} aria-label={copy.languageLabel}>{copy.languageShort}</a>
+  </div>
+</header>

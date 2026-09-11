@@ -1,0 +1,21 @@
+---
+import { COPY, RESTAURANT } from '../data/site';
+import type { Locale } from '../types';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = COPY[lang];
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-name">Casa Amate</p>
+      <p>{copy.footerNote}</p>
+    </div>
+    <div class="footer-links" aria-label={copy.social}>
+      <a href={RESTAURANT.instagramUrl} target="_blank" rel="noreferrer">Instagram</a>
+      <a href={RESTAURANT.facebookUrl} target="_blank" rel="noreferrer">Facebook</a>
+    </div>
+  </div>
+</footer>
